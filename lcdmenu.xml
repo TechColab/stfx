@@ -1,0 +1,22 @@
+<application>
+  <settings lcdColor="White" lcdBackground="On" />
+  <folder text="System Info">
+    <widget text="Show Date/Time" function="ShowDateTime" />
+    <folder text="Network">
+      <widget text="IP Address" function="ShowIPAddress" />
+      <widget text="Use 10.1.1.2" function="Use10Network" />
+      <widget text="Use DHCP" function="UseDHCP" />
+    </folder>
+    <folder text="LCD Color">
+      <widget text="White" function="LcdOn" />
+      <widget text="Off" function="LcdOff" />
+    </folder>
+    <run text="Run ls">ls</run>
+  </folder>
+  <widget text="StartSTFX" function="StartSTFX" />
+  <widget text="StopSTFX" function="StopSTFX" />
+  <widget text="BGtest" function="BGtest" />
+  <widget text="Quit" function="DoQuit" />
+  <widget text="Shutdown" function="DoShutdown" />
+</application>
+

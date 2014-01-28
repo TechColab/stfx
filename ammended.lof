@@ -1,0 +1,9 @@
+/boot/config.txt
+/etc/default/udhcpd
+/etc/network/interfaces
+/etc/rc.local
+/etc/samba/smb.conf
+/etc/udhcpd.conf
+/etc/modules
+/etc/hostname
+/etc/usbmount/usbmount.conf

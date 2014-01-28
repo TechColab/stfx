@@ -1,0 +1,226 @@
+# The Room.stfx by Phill W.J. Rogers is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+# http://creativecommons.org/licenses/by-sa/4.0/deed.en_GB
+#	2013-11-17 by Phill of JerseyFringeProductions@gmail.com
+#	ToDo:
+# add Scene Selection markers from DVD?
+# More focus ?
+# Cause you're a woman! - Women!
+
+00011	secondscreen text 09 (subtitles for Audience Participation by Jersey Fringe Productions)
+00048	secondscreen text 04 "Alcatraz!"
+00196	secondscreen text 03 "Hi Denny!"
+00234	secondscreen text 11 "Metaphor!"
+00307	secondscreen text 03 "Bye Denny!"
+#	Sex scene with Tommy on bed of rose petals
+00316	secondscreen text  2 (The first inning - 3m58s)
+00324	secondscreen test 02 "Focus!"
+00467	secondscreen text 12 "You're doing it wrong!"
+00571	secondscreen text 06 "UN-focus!!"
+00624	spoons 2
+00624	secondscreen text 02 "Spoon!"
+00735	secondscreen text 03 "I put my evil inside you!"
+99749	spoons 5
+00749	secondscreen text 05 "Spoon!"
+00755	secondscreen text  2 "Sestosterone!"
+00756	spoons 1
+00756	secondscreen text 01 "Spoon!"
+00761	spoons 4
+00761	secondscreen text 04 "Spoon!"
+00769	spoons 4
+00769	secondscreen text 04 "Spoon!"
+00815	secondscreen text 10 "Where are we?"
+00831	secondscreen text  2 "Sestosterone!"
+00899	secondscreen text 03 "What candles?"
+00901	secondscreen text 03 "What music?"
+00941	secondscreen text 03 "Was!" (1)
+#	Sex scene with Mark on the stairs
+01038	secondscreen text  2 (The second inning - 2m5s)
+01111	secondscreen test 07 "Focus!"
+01188	secondscreen text 03 "Was!" (2)
+01218	secondscreen text 03 "Was!" (3)
+01233	secondscreen text 03 "Where are we?"
+#	flower shop sales person fails to recognise a regular customer
+01256	secondscreen text 03 "Really?"
+01266	secondscreen text  2 "Why the rush?"
+01282	spoons 12
+01282	secondscreen text 12 "Spoon!"
+01300	secondscreen text  2 "Hi Denny!"
+01327	secondscreen text  2 "But you just got here! Bye Denny!"
+#	check mantlepiece 0:22:31 0 "Spoon!"
+01370	secondscreen text  2 "He just told you - No."
+#	unidentified mixer before vodka
+01440	secondscreen text 11 "What the hell is that?"
+#	Sex scene with Tommy on bed of rose petals
+01562	secondscreen text  2 (The third inning - 1m8s)
+01599	secondscreen text 03 "You're doing it wrong!"
+#	Lisa's Mum
+01689	secondscreen text 04 "Cancer?!"
+01724	secondscreen text  2 "No he didn't!"
+01753	secondscreen text 03 "I put my evil inside you!"
+01771	secondscreen text 04 "Who the hell are you?"
+01773	spoons 12
+01773	secondscreen text 12 "Spoon!"
+#	eating food off a partner
+01804	secondscreen text 03 "Nom, nom!"
+01821	secondscreen text 03 "Nom, nom!"
+01846	secondscreen text 03 "Nom, nom!"
+01867	secondscreen text 04 "Meanwhile, back in San Francisco!"
+01907	secondscreen text  2 "Hi Denny!"
+01928	secondscreen text  2 "But you just got here! Bye Denny!"
+02001	secondscreen text 03 "I put my evil inside you!"
+02009	secondscreen text 04 "Focus!"
+02013	secondscreen text 04 "Meanwhile, back in San Francisco!"
+02085	secondscreen text  2 "Sestosterone!"
+02178	secondscreen text 03 "It matters a great deal!"
+02199	secondscreen text  2 "Sestosterone!"
+02236	secondscreen text  2 "Sestosterone!"
+02284	secondscreen text 05 "And the OSCAR goes to .."
+02290	secondscreen text 03 "Tommy Wiseau!"
+02292	secondscreen text  2 "Sestosterone!"
+#	T laughing at the story of a girl getting beaten up
+02330	secondscreen text 03 "WTF!?"
+02401	secondscreen text  2 "Hi Denny!"
+02440	secondscreen text 02 "How far was that?"
+# 02448	secondscreen text 02 "She's not wearing a dress."
+02549	secondscreen text  2 "Huh! sounds delicious"
+02555	secondscreen text  2 "Bye Denny!"
+02495	secondscreen text 03 "Yes, we can!\nYes, we can!"
+02558	secondscreen text 02 "Alcatraz!"
+#	Lisa's neck
+02568	secondscreen text 05 "Aggggghhh!\nIt's horrible!\nKill it!"
+02574	secondscreen text  2 "No he didn't!"
+02583	secondscreen text 02 "Kill it!"
+02589	secondscreen text 02 "Shoot her!"
+02599	secondscreen text 02 "It's still alive!"
+02606	secondscreen text 04 "Shoot her!"
+02626	secondscreen text 02 "Shoot her!"
+02635	secondscreen text 04 "Shoot her!"
+02647	secondscreen text 03 "Eurgh!!"
+02653	secondscreen text 03 "That thing isn't!"
+02605	secondscreen text 03 "Was!" (4)
+02690	secondscreen text 02 "She's not wearing a dress."
+02681	spoons 3
+02681	secondscreen text 03 "Spoon!"
+02702	spoons 1
+02702	secondscreen text 01 "Spoon!"
+02714	spoons 4
+02714	secondscreen text 04 "Spoon!"
+02722	spoons 3
+02722	secondscreen text 03 "Spoon!"
+02733	spoons 1
+02733	secondscreen text 01 "Spoon!"
+02739	spoons 2
+02739	secondscreen text 02 "Spoon!"
+02745	spoons 2
+02745	secondscreen text 02 "Spoon!"
+02774	secondscreen text 04 "You're tearing him apart, Lisa!"
+02807	secondscreen text 10 "Go, go, go!"
+02815	secondscreen text 02 "Yeay!!"
+02881	secondscreen text  2 "Hi Denny!"
+02908	secondscreen text  2 "Sestosterone!"
+02952	spoons 25
+02952	secondscreen text 25 "Spoon!"
+02979	spoons 11
+02979	secondscreen text 11 "Spoon!"
+02989	secondscreen text 03 "Alcatraz!"
+02992	spoons 19
+02992	secondscreen text 19 "Spoon!"
+03039	secondscreen text 10 (Theme tune to\nMission Impossible)
+03073	secondscreen text 10 "It only records when  someone talks about sex!"
+03103	secondscreen text  2 "Hi Peter!"
+03204	secondscreen text  2 "Sestosterone!"
+03308	secondscreen text 03 "Cheep! Cheep! Cheep!"
+03408	secondscreen text  2 "Hi Denny!"
+03433	secondscreen text 03 "Sit on the floor!\nSit on the floor!"
+03473	secondscreen text  2 "Bye Denny!"
+03536	secondscreen text 02 "Focus!"
+03541	secondscreen text 05 "Caus it makes him cool!"
+03659	spoons 3
+03659	secondscreen text 03 "Spoon!"
+03664	secondscreen text  2 "Hi Denny!"
+03714	secondscreen text 03 "Cheep! Cheep! Cheep!"
+03758	secondscreen text 06 "Where are we?"
+03857	secondscreen text 02 "WTF?"
+03874	secondscreen text 04 "I'm in the movie!\nI'm in the movie!"
+03896	secondscreen text 03 "Was!" (5)
+#	Sex scene with Mark in the bedroom
+03902	secondscreen text  2 (The forth inning - 2m38s)
+04019	secondscreen test 02 "Focus!"
+04045	secondscreen test 04 "Focus!"
+04062	secondscreen text 21 "Go, go, go!"
+04080	secondscreen text 03 "Yeay!!"
+04139	secondscreen text 04 "Meanwhile, back in San Francisco!"
+04276	secondscreen text 03 "Was!" (6)
+04362	secondscreen text 05 "Go, go, go!"
+04366	secondscreen text 02 "Boo!!"
+04387	secondscreen text 04 "Meanwhile, back in San Francisco!"
+04437	secondscreen text 04 "Meanwhile, STILL in San Francisco!"
+04452	spoons 7
+04452	secondscreen text 07 "Spoon!"
+04547	secondscreen text 03 "I put my evil inside you!"
+04556	secondscreen text 04 "Meanwhile, back in San Francisco!"
+#	party scene
+04591	secondscreen text 03 "Where's Peter?"
+04595	fan 20 xmas_tree_on_mains_1
+04595	secondscreen text 20 "Happy Birthday!\n(sing along)"
+#	1:18:27 new Peter?
+04721	secondscreen text 03 "Nom, nom!"
+04726	secondscreen text 03 "Nom, nom!"
+04728	spoons 3
+04728	secondscreen text 03 "Spoon!" \n:-)
+04795	secondscreen text 04 "Who the hell are you?"
+04862	secondscreen text 05 "Where are we?"
+04882	secondscreen text  2 "Hi Johnny!"
+05078	spoons 2
+05078	secondscreen text 02 "Spoon!"
+05085	secondscreen text 05 "Meanwhile, back in San Francisco!"
+05164	secondscreen text 02 "Cheep! Cheep! Cheep!"
+05183	secondscreen text 03 "Where are we?"
+05219	secondscreen text 03 "I put my evil inside you!"
+#	1:27:40 dials Mark using 8 keys
+05551	secondscreen text 10 "Hump the dress!\nHump the dress!"
+05562	secondscreen text 05 "Yeay!"
+05589	secondscreen text 10 "Don't do it! \nWho'll pay for Denny?"
+05628	secondscreen text 02 "He's dead!"
+05633	secondscreen text 02 "He's dead!"
+05639	secondscreen text 02 "He's dead!"
+05716	secondscreen text 02 "Focus!"
+05725	secondscreen text 02 "He's dead!"
+05817	leds fuzz
+#	Titles
+05824	secondscreen text 15 (Please take a spoon & give it a good home.)
+05852	secondscreen text 60 (Lighters / phones swaying)
+05962	secondscreen text 10 (Happy 10th\nAnniversary.)
+
+# 00253 4m13s first sight of vase of roses in bedroom
+# 00402 6m42s Lisa holding single rose in bed
+# 00432 7m12s Johnny holding single rose in bed, tearing petals off slowly
+# 00520 8m40s Single petals fall off Lisa's back
+# 00562 9m22s Johnny leaves a single rose on bed for Lisa
+# 00580 9m40s Lisa picks up the rose from the bed
+# 01244 20m44s we are in the flower shop
+# 01251 20m51s Johnny enters flower shop
+# 01260 21m00s shopkeeper hands Johnny the roses
+# 01268 21m08s Johnny & us leave the flower shop
+# 01349 22m29s Johnny presents roses to Lisa
+# 01565 26m05s Roses are in the bedroom
+# 01590 26m30s Johnny playing with single rose again
+# 05555 1h32m35s Johnny smelling the dress
+
+00253	aerosol 1 4m13s first sight of vase of roses in bedroom
+00402	aerosol 1 6m42s Lisa holding single rose in bed
+00432	aerosol 3 7m12s Johnny holding single rose in bed, tearing petals off slowly
+00520	aerosol 1 8m40s Single petals fall off Lisa's back
+00562	aerosol 1 9m22s Johnny leaves a single rose on bed for Lisa
+00580	aerosol 1 9m40s Lisa picks up the rose from the bed
+01244	aerosol 1 20m44s we are in the flower shop
+01251	aerosol 1 20m51s Johnny enters flower shop
+01260	aerosol 3 21m00s shopkeeper hands Johnny the roses
+01268	aerosol 1 21m08s Johnny & us leave the flower shop
+01349	aerosol 3 22m29s Johnny presents roses to Lisa
+01565	aerosol 1 26m05s Roses are in the bedroom
+01590	aerosol 1 26m30s Johnny playing with single rose again
+05555	aerosol 2 1h32m35s Johnny smelling the dress
+05568	aerosol 1
+
+#	Fin 1:39:34,26
