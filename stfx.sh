@@ -62,7 +62,7 @@
 #		Tweaked to tolerate spaces in filename.
 #		2014-01-30 PhillRogers@JerseyMail.co.uk
 #		moved temporary files to tmpfs for speed and save SD wear
-#		added timeing log to get an idea of acheivable resolution
+#		added timing log to get an idea of achievable resolution
 #		longest itteration during test clip was 154mS (using WiFi)
 #		seems to run fine without the sleep
 # ToDo:
