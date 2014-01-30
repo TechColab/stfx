@@ -58,7 +58,13 @@
 #		change so *.stfx gets it's name from the movie file name, if no title.
 #		Would be nice to use filename fully but see lower notes.
 #		Tweaked to tolerate spaces in filename.
+#		2014-01-30 PhillRogers@JerseyMail.co.uk
+#		moved temporary files to tmpfs for speed and save SD wear
+#		added timeing log to get an idea of acheivable resolution
+#		longest itteration during test clip was 154mS (using WiFi)
+#		seems to run fine without the sleep
 # ToDo:
+#		Repeats still faulty.  Should support multiple concurrent actions.
 #		Check if image cache reliable is really reliable now.
 #		Test installer
 # stfx file format:
@@ -79,21 +85,24 @@ obeydir=$(echo $0 | awk -v pwd="$(pwd)" '# simplified version
 cd "${obeydir}" ; obeydir="$(pwd)"
 printf "Now self-located to ${obeydir} for further processing.\n"
 
+T=/run/stfx # all our temporary files are here in the RAM file system
+[ ! -d $T ] && sudo mkdir $T
+sudo chown pi:pi $T
 echo $PATH | egrep -q "(^|:)/usr/local/bin(:|$)" || PATH=$PATH:/usr/local/bin:
 export PATH
-rm -f debug.log
+rm -f $T/debug.log
 
 # Currently connected TV may have differnt auto-detected parameters to previous TV.
 # Save initial TV state, detect if empty frame buffer is same as last time.
 # If different then dump the current cache & rebuild a new cache set.
-fbset -s > /tmp/fbset-s.log
-# cat /tmp/fbset-s.log >> debug.log
+fbset -s > $T/fbset-s.log
+# cat $T/fbset-s.log >> $T/debug.log
 sudo sh -c "TERM=linux setterm -foreground black >/dev/tty0"
 sudo sh -c "TERM=linux setterm -cursor off -clear >/dev/tty0"
 cat /dev/zero > /dev/fb0 2>/dev/null 
 cat /dev/fb0 > blank.fb
 # dissable TV output while building the cache to avoid distracting viewers
-tvservice -s > /tmp/tvservice-s.log
+tvservice -s > $T/tvservice-s.log
 tvservice -o
 blank=$(cksum blank.fb | awk '{print $1}')
 [ ! -f cache/blank.fb ] && true > cache/blank.fb
@@ -155,12 +164,12 @@ done
 # will be root if launched from the boot process
 
 if [ "$(id -u)" = "0" ] ; then
-  true > /tmp/tmp.xml
-  chown -R pi:pi cache cksum.log /tmp/tmp.xml
+  true > $T/tmp.xml
+  chown -R pi:pi cache cksum.log $T/tmp.xml
 fi
 
 # check which TV output to restore
-set $(perl -n -e ' m/ \[(NTSC|PAL) (.+)\]/ && print "$1\t$2\n" ; ' /tmp/tvservice-s.log) NOT_CV
+set $(perl -n -e ' m/ \[(NTSC|PAL) (.+)\]/ && print "$1\t$2\n" ; ' $T/tvservice-s.log) NOT_CV
 if [ "$1" = "NOT_CV" ] ; then
   tvservice -p
 	# switch the TV on
@@ -171,18 +180,17 @@ if [ "$1" = "NOT_CV" ] ; then
 else
 	tvservice --sdtvon="$1 $2"
 fi
-rm -f /tmp/tvservice-s.log
-fbset -db /tmp/fbset-s.log $(awk -F'"' '/^mode/{print $2}' /tmp/fbset-s.log) && rm -f /tmp/fbset-s.log
+rm -f $T/tvservice-s.log
+fbset -db $T/fbset-s.log $(awk -F'"' '/^mode/{print $2}' $T/fbset-s.log) && rm -f $T/fbset-s.log
 
 # finished preparation
 rm -f tmp.jpg ; font_size=72 ; m="Waiting for media player."
 convert -size 1920x1080 -background black -fill white -gravity center -density 53 -pointsize $font_size caption:"${m}" tmp.jpg
-sudo fbi -noverbose -T 1 -a -1 -t 9 tmp.jpg 2>/dev/null
+sudo fbi -noverbose -T 1 -a -1 tmp.jpg 2>/dev/null
 # printf "Cache done.\n" ; exit 0 # DeBug
 
 # load the customised config
 . ./stfx.config
-fn_init
 
 # start the outer loop, looking for the media player
 while true ; do
@@ -198,9 +206,9 @@ while true ; do
 				for ip in $( arp -i ${lan} -a | perl -n -e ' /\(([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)\)/ && print "$1\n" ;' ) ; do
 					if [ "${media_player_ip}" = "" ] ; then
 						printf "Looking for VLC on IP device -=>${ip}<=- .. \n"
-						true > /tmp/tmp.xml
-						wget -q --timeout=1 --tries=1 --user='' --password=${vlc_http_password} -O /tmp/tmp.xml http://${ip}:8080/requests/status.xml
-						if [ "$?" = "0" -a -s /tmp/tmp.xml ] ; then
+						true > $T/tmp.xml
+						wget -q --timeout=1 --tries=1 --user='' --password=${vlc_http_password} -O $T/tmp.xml http://${ip}:8080/requests/status.xml
+						if [ "$?" = "0" -a -s $T/tmp.xml ] ; then
 							media_player_ip=${ip}
 							media_player_lan=${lan}
 						fi
@@ -217,10 +225,12 @@ while true ; do
 		printf "Found media player at ${media_player_ip} on ${media_player_lan} \n"
 
 		printf "Entering polling loop .. \n"
+		fn_init
+		# time_start=0 ; time_prev=0
 		prev="" ; export prev
-		rm -f status.log ; true > /tmp/tmp.xml
-		while wget -q --user='' --password=${vlc_http_password} -O /tmp/tmp.xml http://${media_player_ip}:8080/requests/status.xml ; do
-			# ls -l /tmp/tmp.xml
+		rm -f status.log ; true > $T/tmp.xml
+		while wget -q --user='' --password=${vlc_http_password} -O $T/tmp.xml http://${media_player_ip}:8080/requests/status.xml ; do
+			# ls -l $T/tmp.xml
 			status=$( perl -e '
 				while (<>) {
 					if( $_ =~ /^<time>(\d*)<\/time>/ ) { $time=$1; }
@@ -239,35 +249,45 @@ while true ; do
 					$movie = $bfn ;
 				}
 				if($time ne "") { print "$time\t$movie\n" ; }
-				' /tmp/tmp.xml )
+				' $T/tmp.xml )
 			# printf "DeBug: status-=>%s<=- \n" "${status}"
+
 			if [ "${status}" != "" ] ; then
 				set $(echo ${status}) ; seconds=$1 ; shift ; movie="$*"
 				# printf "DeBug: Title:%s\tSeconds:%d\n" "$movie" "$seconds"
 				if [ -f "public/Movies/${movie}.stfx" ] ; then
 					action=$(awk -v seconds=${seconds} -v prev="${prev}" 'BEGIN{OFS=FS="\t"}/^#/{next}
 						match($2,"^secondscreen"){$1=$1 -0} # compensate for frame buffer rendering time
-						(seconds>=$1) && (seconds<=($1 +2)) && $2!=prev{print $2;exit}
+						(seconds>=$1) && (seconds<($1 +1)) && $2!=prev{print $2;exit}
 						' public/Movies/"${movie}".stfx )
 			# Phill - dragons be here - above and below
 					if [ "$repeats" = "on" ] ; then
 						if [ "${action}" != "" ] && [ "${seconds} ${action}" != "${prev}" ] ; then
-							# echo "${seconds} ${action}" >> debug.log
+							# echo "${seconds} ${action}" >> $T/debug.log
 							prev="${seconds} ${action}"
 							fn_action "${action}"
 						fi
 					else
 						if [ "${action}" != "" ] && [ "${action}" != "${prev}" ] ; then
-							# echo "${action}" >> debug.log
+							# echo "${action}" >> $T/debug.log
 							prev="${action}"
 							fn_action "${action}"
 						fi
 					fi
 				fi
 			fi
-			sleep 0.5
+
+			# time_end=$(date +"%s%N")
+      # if [ "$time_start" != "0" ] ; then
+			# 	time_busy=$(expr $time_end - $time_start)
+			# 	expr $time_busy \> $time_prev > /dev/null && echo $time_busy > $T/longest_busy_time.log
+			# 	time_prev=$time_busy
+      # fi
+			sleep 0.25 # Not needed but just trying to not pester the media_player too much.
+			# time_start=$(date +"%s%N")
+
 		done
-		rm -f status.log ; true > /tmp/tmp.xml
+		rm -f status.log ; true > $T/tmp.xml
 
 	fi
 
