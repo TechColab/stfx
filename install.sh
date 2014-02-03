@@ -16,6 +16,19 @@ E_O_F
 
 exit 0 ; # comment out this line to run the installer as-is.
 
+# remove unwanted stuff
+sudo apt-get autoremove 
+sudo tasksel remove desktop
+sudo apt-get -y remove task-desktop 
+sudo apt-get -y remove x-window-system-core xserver-xorg 
+sudo apt-get -y remove x11-common midori lxde 
+sudo apt-get clean
+sudo sh -c 'dpkg -l | egrep "^rc" | cut -d " " -f 3 | xargs dpkg --purge'
+rm -rf ~/python_games
+sudo rm -fr /opt
+sudo swapoff -a ; sudo dd if=/dev/zero of=/var/swap bs=1M count=100 ; rm -f /var/swap
+cd /var/log/ ; sudo rm `find . -type f`
+
 sudo apt-get update
 sudo apt-get -y upgrade
 
