@@ -89,7 +89,7 @@ printf "Now self-located to ${obeydir} for further processing.\n"
 
 T=/run/stfx # all our temporary files are here in the RAM file system
 [ ! -d $T ] && sudo mkdir $T
-sudo chown pi:pi $T
+sudo chown -R pi:pi $T
 echo $PATH | egrep -q "(^|:)/usr/local/bin(:|$)" || PATH=$PATH:/usr/local/bin:
 export PATH
 rm -f $T/debug.log
@@ -165,11 +165,6 @@ done
 
 # will be root if launched from the boot process
 
-if [ "$(id -u)" = "0" ] ; then
-  true > $T/tmp.xml
-  chown -R pi:pi cache cksum.log $T/tmp.xml
-fi
-
 # check which TV output to restore
 set $(perl -n -e ' m/ \[(NTSC|PAL) (.+)\]/ && print "$1\t$2\n" ; ' $T/tvservice-s.log) NOT_CV
 if [ "$1" = "NOT_CV" ] ; then
@@ -186,10 +181,15 @@ rm -f $T/tvservice-s.log
 fbset -db $T/fbset-s.log $(awk -F'"' '/^mode/{print $2}' $T/fbset-s.log) && rm -f $T/fbset-s.log
 
 # finished preparation
-rm -f tmp.jpg ; font_size=72 ; m="Waiting for media player."
-convert -size 1920x1080 -background black -fill white -gravity center -density 53 -pointsize $font_size caption:"${m}" tmp.jpg
-sudo fbi -noverbose -T 1 -a -1 tmp.jpg 2>/dev/null
+rm -f $T/tmp.jpg ; font_size=72 ; m="Waiting for media player."
+convert -size 1920x1080 -background black -fill white -gravity center -density 53 -pointsize $font_size caption:"${m}" $T/tmp.jpg
+sudo fbi -noverbose -T 1 -a -1 -t 6 $T/tmp.jpg 2>/dev/null
 # printf "Cache done.\n" ; exit 0 # DeBug
+
+if [ "$(id -u)" = "0" ] ; then
+  true > $T/tmp.xml
+  chown -R pi:pi cache cksum.log blank.fb $T/*
+fi
 
 # load the customised config
 . ./stfx.config

@@ -25,9 +25,7 @@ sudo apt-get -y remove x11-common midori lxde
 sudo apt-get clean
 sudo sh -c 'dpkg -l | egrep "^rc" | cut -d " " -f 3 | xargs dpkg --purge'
 rm -rf ~/python_games
-sudo rm -fr /opt
-sudo swapoff -a ; sudo dd if=/dev/zero of=/var/swap bs=1M count=100 ; rm -f /var/swap
-cd /var/log/ ; sudo rm `find . -type f`
+sudo rm `find /var/log/ -type f`
 
 sudo apt-get update
 sudo apt-get -y upgrade
@@ -46,18 +44,13 @@ sudo apt-get install -y python-rpi.gpio
 sudo apt-get install -y python-smbus
 sudo apt-get install -y i2c-tools
 
-# sudo apt-get install -y usbmount
-# sudo apt-get install -y unrar-free
-# sudo apt-get install -y p7zip
-
-sudo adduser pi --ingroup video
-
 cd ~/
 [ ! -d git ] && mkdir git
 
 cd ~/git
 git clone git://git.drogon.net/wiringPi
 cd wiringPi
+git pull origin
 sudo ./build
 cd ~/
 gpio -v
@@ -82,7 +75,8 @@ cd PiBits/ServoBlaster/user
 make
 sudo make install
 cd ~/
-sudo servod --pcm --p1pins=12
+sudo update-rc.d servoblaster disable
+sudo servod --pcm
 ps -ef | egrep "servo[d]"
 sudo killall servod
 
@@ -95,14 +89,6 @@ LDFLAGS="-s -L/usr/lib -L/usr/lib -L/opt/vc/lib" ./configure $ARGS
 make
 cd ~/
 cec-client -l
-
-# N.B. could potentially run the media-player and effects-slave together?  But not reccomended.
-# cd ~/git
-# git clone git://git.videolan.org/vlc.git
-# cd vlc
-# wget http://www.mrvestek.com/hosted/vlc_hw_raspberry.rar
-# unrar vlc_hw_raspberry.rar
-# cd ~/
 
 cd ~/
 [ ! -d PiFm ] && mkdir PiFm
@@ -118,7 +104,7 @@ ln -s /home/pi/git/Adafruit-Raspberry-Pi-Python-Code/Adafruit_I2C/Adafruit_I2C.p
 ln -s /home/pi/git/Adafruit-Raspberry-Pi-Python-Code/Adafruit_MCP230xx/Adafruit_MCP230xx.py ./
 ln -s /home/pi/git/Adafruit-Raspberry-Pi-Python-Code/Adafruit_CharLCDPlate/Adafruit_CharLCDPlate.py ./
 ln -s /home/pi/git/RaspberryPiLcdMenu/ListSelector.py ./
-python -m compileall .
+sudo -u pi python -m compileall .
 
 mkdir -p cache public/Movies
 ln links.html public/
@@ -155,17 +141,15 @@ rm -f cksum.log blank.fb lint a.out *.pyc cache/*
 sudo update-rc.d ssh enable
 sudo update-rc.d udhcpd enable
 sudo update-rc.d hostapd disable
-sudo update-rc.d servoblaster disable
 
 # should ask before over-writing the various system config files
 ls -l `cat ammended.lof`
 tar -T ammended.lof -czf before-ammendment-$(date +"%Y%m%d%H%M%S").tgz > /dev/null 2>&1
 sudo tar -C / -xzf ammended.tgz
+sudo chown -R pi:pi .
 cd ~/
 
 which rpi-update >/dev/null || sudo apt-get install -y rpi-update
-# wget https://raw.github.com/Hexxeh/rpi-update/master/rpi-update -O /usr/bin/rpi-update
-# chmod +x /usr/bin/rpi-update
 sudo rpi-update
 sudo shutdown -F -r now
 

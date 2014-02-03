@@ -6,4 +6,5 @@
 /etc/udhcpd.conf
 /etc/modules
 /etc/hostname
+/etc/hosts
 /etc/usbmount/usbmount.conf
