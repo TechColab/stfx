@@ -16,16 +16,24 @@ E_O_F
 
 exit 0 ; # comment out this line to run the installer as-is.
 
-# remove unwanted stuff
-sudo apt-get autoremove 
+if [ "$(id -u)" = "0" ] ; then
+  printf "Please run this as the normal pi user, not root.\n"
+  exit 1
+fi
+
+# Because ~ becomes /root/ when sudo-ing:
+PH=/home/pi ; export PH
+
+# remove unwanted stuff, probably some redundancy here:
 sudo tasksel remove desktop
 sudo apt-get -y remove task-desktop 
 sudo apt-get -y remove x-window-system-core xserver-xorg 
 sudo apt-get -y remove x11-common midori lxde 
-sudo apt-get clean
+sudo apt-get -y autoremove 
 sudo sh -c 'dpkg -l | egrep "^rc" | cut -d " " -f 3 | xargs dpkg --purge'
-rm -rf ~/python_games
+sudo apt-get clean
 sudo rm `find /var/log/ -type f`
+rm -rf ${PH}/python_games
 
 sudo apt-get update
 sudo apt-get -y upgrade
@@ -44,67 +52,67 @@ sudo apt-get install -y python-rpi.gpio
 sudo apt-get install -y python-smbus
 sudo apt-get install -y i2c-tools
 
-cd ~/
+cd ${PH}/
 [ ! -d git ] && mkdir git
 
-cd ~/git
+cd ${PH}/git
 git clone git://git.drogon.net/wiringPi
 cd wiringPi
 git pull origin
 sudo ./build
-cd ~/
+cd ${PH}/
 gpio -v
 gpio readall
 
-cd ~/git
+cd ${PH}/git
 git clone https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code.git
 cd Adafruit-Raspberry-Pi-Python-Code/Adafruit_CharLCDPlate/
-cd ~/
+cd ${PH}/
 
-cd ~/git
+cd ${PH}/git
 git clone https://github.com/aufder/RaspberryPiLcdMenu.git
 cd RaspberryPiLcdMenu
 ln -s /home/pi/git/Adafruit-Raspberry-Pi-Python-Code/Adafruit_I2C/Adafruit_I2C.py ./
 ln -s /home/pi/git/Adafruit-Raspberry-Pi-Python-Code/Adafruit_MCP230xx/Adafruit_MCP230xx.py ./
 ln -s /home/pi/git/Adafruit-Raspberry-Pi-Python-Code/Adafruit_CharLCDPlate/Adafruit_CharLCDPlate.py ./
-cd ~/
+cd ${PH}/
 
-cd ~/git
+cd ${PH}/git
 git clone https://github.com/richardghirst/PiBits.git
 cd PiBits/ServoBlaster/user
 make
 sudo make install
-cd ~/
+cd ${PH}/
 sudo update-rc.d servoblaster disable
 sudo servod --pcm
 ps -ef | egrep "servo[d]"
 sudo killall servod
 
-cd ~/git
+cd ${PH}/git
 git clone https://github.com/Pulse-Eight/libcec.git
 cd libcec
 ./bootstrap
 ARGS="--prefix=/usr --enable-rpi --with-rpi-include-path=/opt/vc/include --with-rpi-lib-path=/opt/vc/include"
 LDFLAGS="-s -L/usr/lib -L/usr/lib -L/opt/vc/lib" ./configure $ARGS
 make
-cd ~/
+cd ${PH}/
 cec-client -l
 
-cd ~/
+cd ${PH}/
 [ ! -d PiFm ] && mkdir PiFm
 cd PiFm
 wget http://omattos.com/pifm.tar.gz
 gunzip < pifm.tar.gz | tar -xvf -
 sudo ./pifm left_right.wav 87.5
-cd ~/
+cd ${PH}/
 
 [ ! -d stfx ] && mkdir stfx
-cd ~/stfx
+cd ${PH}/stfx
 ln -s /home/pi/git/Adafruit-Raspberry-Pi-Python-Code/Adafruit_I2C/Adafruit_I2C.py ./
 ln -s /home/pi/git/Adafruit-Raspberry-Pi-Python-Code/Adafruit_MCP230xx/Adafruit_MCP230xx.py ./
 ln -s /home/pi/git/Adafruit-Raspberry-Pi-Python-Code/Adafruit_CharLCDPlate/Adafruit_CharLCDPlate.py ./
 ln -s /home/pi/git/RaspberryPiLcdMenu/ListSelector.py ./
-sudo -u pi python -m compileall .
+python -m compileall .
 
 mkdir -p cache public/Movies
 ln links.html public/
@@ -137,20 +145,22 @@ cccc led_strip_car-plod1
 cccc led_strip_grey
 
 rm -f cksum.log blank.fb lint a.out *.pyc cache/*
-
-sudo update-rc.d ssh enable
-sudo update-rc.d udhcpd enable
-sudo update-rc.d hostapd disable
+[ ! -w /dev/i2c-0 -o ! -w /dev/i2c-1 ] && gpio load i2c
+[ ! -w /dev/spidev0.0 -o ! -w /dev/spidev0.1 ] && gpio load spi
 
 # should ask before over-writing the various system config files
 ls -l `cat ammended.lof`
 tar -T ammended.lof -czf before-ammendment-$(date +"%Y%m%d%H%M%S").tgz > /dev/null 2>&1
 sudo tar -C / -xzf ammended.tgz
 sudo chown -R pi:pi .
-cd ~/
+cd ${PH}/
+
+sudo update-rc.d hostapd disable
+sudo update-rc.d udhcpd enable
+sudo update-rc.d ssh enable
 
 which rpi-update >/dev/null || sudo apt-get install -y rpi-update
-sudo rpi-update
+# sudo rpi-update
 sudo shutdown -F -r now
 
 # build the install file - just for my notes
