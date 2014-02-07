@@ -28,8 +28,7 @@ export i2c rev
 ( # Start LCD menu if fitted or STFX directly
 cd /home/pi/stfx/
 # detect MCP23017 on std bus first then later work out if it's deffo LCD
-/usr/local/bin/i2cdetectany.sh 20 $i2c
-if [ "$?" = "0" ] ; then
+if /usr/local/bin/i2cdetectany.sh 20 $i2c ; then
 	./lcdmenu.py >/dev/null 2>/dev/null
 else
 	./stfx.sh >/dev/null 2>/dev/null
