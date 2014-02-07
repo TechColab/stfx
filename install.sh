@@ -147,6 +147,7 @@ cccc led_strip_grey
 rm -f cksum.log blank.fb lint a.out *.pyc cache/*
 [ ! -w /dev/i2c-0 -o ! -w /dev/i2c-1 ] && gpio load i2c
 [ ! -w /dev/spidev0.0 -o ! -w /dev/spidev0.1 ] && gpio load spi
+sudo cp i2cdetectany.sh /usr/local/bin/
 
 # should ask before over-writing the various system config files
 ls -l `cat ammended.lof`
@@ -166,6 +167,6 @@ sudo shutdown -F -r now
 # build the install file - just for my notes
 # rm -f stfx.tgz ; tar -czf stfx.tgz links.html vlcrc.template winscp.ini.template putty.reg.template \
 # led_strip_car-fuzz1.c led_strip_car-knightrider.c led_strip_car-plod1.c led_strip_grey.c \
-# install.sh ammended.lof ammended.tgz i2cdetect-this.sh lcdmenu.py lcdmenu.xml stfx.sh stfx.config \
+# install.sh ammended.lof ammended.tgz i2cdetectany.sh lcdmenu.py lcdmenu.xml stfx.sh stfx.config \
 # 'The Room.stfx'
 
